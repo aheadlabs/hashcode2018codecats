@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HashCode2018
 {
-    public class DataHelper
+    public static class DataHelper
     {
         #region Public Methods
 
-        public DataSet MapToDataset(string[] lines)
+        public static DataSet MapToDataset(string[] lines)
         {
             string firstLine = lines[0];
             string[] lineSplitted = firstLine.Split(" ".ToCharArray(), StringSplitOptions.None);
@@ -22,10 +22,11 @@ namespace HashCode2018
                 Vehicles = Int32.Parse((lineSplitted[2])),
                 Rides = Int32.Parse((lineSplitted[3])),
                 Bonus = Int32.Parse((lineSplitted[4])),
-                Steps = Int32.Parse((lineSplitted[5]))
+                Steps = Int32.Parse((lineSplitted[5])),
+                RidesList = new List<Ride>()
             };
 
-            for (int i = 1; i < lines.Length - 1; i++)
+            for (int i = 1; i < lines.Length; i++)
             {
                 lineSplitted = lines[i].Split(" ".ToCharArray(), StringSplitOptions.None);
                 dataSet.RidesList.Add(new Ride
@@ -41,7 +42,7 @@ namespace HashCode2018
                         Column = Int32.Parse(lineSplitted[3])
                     },
                     EarliestStart = Int32.Parse(lineSplitted[4]),
-                    LatestFinish = Int32.Parse(lineSplitted[4])
+                    LatestFinish = Int32.Parse(lineSplitted[5])
                 });
             }
 
