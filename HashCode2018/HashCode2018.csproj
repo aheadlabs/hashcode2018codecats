@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHelper.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="DataSet.cs" />
     <Compile Include="FilesHelper.cs" />
@@ -51,6 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="data\a_example.in" />
+    <None Include="data\b_should_be_easy.in" />
+    <None Include="data\c_no_hurry.in" />
+    <None Include="data\d_metropolis.in" />
+    <None Include="data\e_high_bonus.in" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

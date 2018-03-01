@@ -14,11 +14,6 @@ namespace HashCode2018
         {
             string file = @"C:\Users\i3an\Desktop\HashCode 2018\a_example.in";
             string[] contents = FilesHelper.ReadFile(file);
-
-            //foreach (string line in contents)
-            //{
-            //    Console.WriteLine(line);
-            //}
         }
 
         #endregion Private Methods
