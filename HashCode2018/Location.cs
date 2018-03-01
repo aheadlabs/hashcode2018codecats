@@ -13,6 +13,11 @@ namespace HashCode2018
         public int Row { get; set; }
         public int Column { get; set; }
 
+        public static int operator -(Location self, Location other)
+        {
+            return (self.Column - other.Column) + (self.Row - other.Row);
+        }
+
         #endregion Public Properties
     }
 }
