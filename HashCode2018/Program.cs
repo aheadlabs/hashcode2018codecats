@@ -6,10 +6,21 @@ using System.Threading.Tasks;
 
 namespace HashCode2018
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        #region Private Methods
+
+        private static void Main(string[] args)
         {
+            string file = @"C:\Users\i3an\Desktop\HashCode 2018\a_example.in";
+            string[] contents = FilesHelper.ReadFile(file);
+
+            //foreach (string line in contents)
+            //{
+            //    Console.WriteLine(line);
+            //}
         }
+
+        #endregion Private Methods
     }
 }
