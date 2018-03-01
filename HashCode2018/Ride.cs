@@ -14,6 +14,7 @@ namespace HashCode2018
         public Location To { get; set; }
         public int EarliestStart { get; set; }
         public int LatestFinish { get; set; }
+        public int Distance { get; set; }
 
         #endregion Public Properties
     }

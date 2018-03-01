@@ -14,7 +14,6 @@ namespace HashCode2018
             string filePath = Path.Combine(currentPath, "a_example.in");
 
             string[] contents = FilesHelper.ReadFile(filePath);
-
             DataSet dataSet = DataHelper.MapToDataset(contents);
 
             Console.ReadKey();
