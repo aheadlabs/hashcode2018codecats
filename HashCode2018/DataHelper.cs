@@ -42,7 +42,7 @@ namespace HashCode2018
                 };
                 int EarliestStart = Int32.Parse(lineSplitted[4]);
                 int LatestFinish = Int32.Parse(lineSplitted[5]);
-                dataSet.RidesList.Add(new Ride
+                dataSet.RidesList.Add(new Ride(i)
                 {
                     From = From,
                     To = To,

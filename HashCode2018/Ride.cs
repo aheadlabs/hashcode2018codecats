@@ -10,6 +10,21 @@ namespace HashCode2018
     {
         #region Public Properties
 
+        public int Id { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Constructors
+
+        public Ride(int id)
+        {
+            Id = id;
+        }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
         public Location From { get; set; }
         public Location To { get; set; }
         public int EarliestStart { get; set; }

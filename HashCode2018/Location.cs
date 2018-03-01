@@ -15,7 +15,7 @@ namespace HashCode2018
 
         public static int operator -(Location self, Location other)
         {
-            return (self.Column - other.Column) + (self.Row - other.Row);
+            return Math.Abs(self.Column - other.Column) + Math.Abs(self.Row - other.Row);
         }
 
         #endregion Public Properties

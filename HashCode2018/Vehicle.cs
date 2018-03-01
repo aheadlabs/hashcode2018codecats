@@ -8,15 +8,24 @@ namespace HashCode2018
 {
     public class Vehicle
     {
+        #region Public Properties
+
+        public int Id { get; set; }
+
+        #endregion Public Properties
+
         #region Public Constructors
 
-        public Vehicle(int maxSteps)
+        public Vehicle(int maxSteps, int id)
         {
             Position = new Location { Column = 0, Row = 0 };
             _maxSteps = maxSteps;
+            _id = id;
         }
 
         #endregion Public Constructors
+
+
 
         #region Public Properties
 
@@ -27,10 +36,12 @@ namespace HashCode2018
 
         #region Public Methods
 
+        public List<Ride> RidesList { get; set; } = new List<Ride>();
+
         public bool CanDoIt(Ride ride)
         {
-            var restSteps = _maxSteps - CompliteSteps - (ride.From - ride.To);
-            return restSteps > 0 && (_maxSteps - CompliteSteps) <= restSteps;
+            var restSteps = _maxSteps - CompliteSteps - (ride.From - ride.To) + (this.Position - ride.From);
+            return restSteps > 0 && (_maxSteps - CompliteSteps) >= restSteps;
         }
 
         public bool RideGo(Ride ride)
@@ -40,6 +51,7 @@ namespace HashCode2018
 
             CompliteSteps += (ride.From - ride.To);
             Position = ride.To;
+            RidesList.Add(ride);
             return true;
         }
 
@@ -47,6 +59,14 @@ namespace HashCode2018
 
         #region Private Fields
 
+        public override string ToString()
+        {
+            string[] a = RidesList.Select(x => x.Id.ToString()).ToArray();
+            string b = string.Join(" ", a);
+            return $"{_id} {b}";
+        }
+
+        private readonly int _id;
         private int _maxSteps;
 
         #endregion Private Fields
