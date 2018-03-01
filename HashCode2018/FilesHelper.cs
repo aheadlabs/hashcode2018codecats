@@ -12,8 +12,6 @@ namespace HashCode2018
 
         public static string[] ReadFile(string path)
         {
-            string text = System.IO.File.ReadAllText(path);
-
             return System.IO.File.ReadAllLines(path);
         }
 

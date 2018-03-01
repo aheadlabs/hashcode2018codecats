@@ -16,6 +16,8 @@ namespace HashCode2018
             string[] contents = FilesHelper.ReadFile(file);
 
             DataSet dataSet = DataHelper.MapToDataset(contents);
+
+            Console.ReadKey();
         }
 
         #endregion Private Methods
