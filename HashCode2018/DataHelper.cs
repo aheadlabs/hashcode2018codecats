@@ -52,10 +52,6 @@ namespace HashCode2018
                 });
             }
 
-            //foreach (Ride ride in dataSet.RidesList)
-            //{
-            //    ride.Distance = DataHelper.CalculateDistance(ride.From, ride.To);
-            //}
             return dataSet;
         }
 
