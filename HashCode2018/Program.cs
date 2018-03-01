@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace HashCode2018
 {
@@ -12,8 +10,10 @@ namespace HashCode2018
 
         private static void Main(string[] args)
         {
-            string file = @"C:\Users\i3an\Desktop\HashCode 2018\a_example.in";
-            string[] contents = FilesHelper.ReadFile(file);
+            string currentPath = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.FullName, "data");
+            string filePath = Path.Combine(currentPath, "a_example.in");
+
+            string[] contents = FilesHelper.ReadFile(filePath);
 
             DataSet dataSet = DataHelper.MapToDataset(contents);
 
