@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace HashCode2018
@@ -12,13 +13,13 @@ namespace HashCode2018
         private static void Main(string[] args)
         {
             string currentPath = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.FullName, "data");
-            string filePath = Path.Combine(currentPath, "a_example.in");
+            string filePath = Path.Combine(currentPath, "b_should_be_easy.in");
 
             string[] contents = FilesHelper.ReadFile(filePath);
             DataSet dataSet = DataHelper.MapToDataset(contents);
 
             List<Vehicle> vehiclesList = new List<Vehicle>();
-            for (int i = 0; i < dataSet.Vehicles; i++)
+            for (int i = 1; i < dataSet.Vehicles + 1; i++)
             {
                 vehiclesList.Add(new Vehicle(dataSet.Steps, i));
             }
@@ -36,14 +37,9 @@ namespace HashCode2018
 
             foreach (Vehicle vehicle in vehiclesList)
             {
-                for (var index = 0; index < dataSet.RidesList.Count; index++)
-                {
-                    Ride ride = dataSet.RidesList[index];
-                    bool ok = vehicle.RideGo(ride);
-                    if (ok) break;
-                }
+                vehicle.RideGo(dataSet.RidesList);
             }
-
+            var result = vehiclesList.Select(x => x.ToString()).ToArray();
             Console.ReadKey();
         }
 

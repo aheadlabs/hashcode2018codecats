@@ -40,19 +40,26 @@ namespace HashCode2018
 
         public bool CanDoIt(Ride ride)
         {
-            var restSteps = _maxSteps - CompliteSteps - (ride.From - ride.To) + (this.Position - ride.From);
+            var restSteps = _maxSteps - CompliteSteps - ((ride.From - ride.To) + (this.Position - ride.From));
             return restSteps > 0 && (_maxSteps - CompliteSteps) >= restSteps;
         }
 
-        public bool RideGo(Ride ride)
+        public void RideGo(List<Ride> rides)
         {
-            if (!CanDoIt(ride))
-                return false;
+            foreach (var ride in rides.ToList())
+            {
+                while (this.CompliteSteps < ride.EarliestStart)
+                {
+                    this.CompliteSteps++;
+                }
+                if (!CanDoIt(ride))
+                    continue;
 
-            CompliteSteps += (ride.From - ride.To);
-            Position = ride.To;
-            RidesList.Add(ride);
-            return true;
+                CompliteSteps += (ride.From - ride.To) + (this.Position - ride.From);
+                Position = ride.To;
+                RidesList.Add(ride);
+                rides.Remove(ride);
+            }
         }
 
         #endregion Public Methods
