@@ -40,8 +40,10 @@ namespace HashCode2018
 
         public bool CanDoIt(Ride ride)
         {
+            var pasosACompletar = ((ride.From - ride.To) + (this.Position - ride.From));
+            var llegaATiempo = (ride.LatestFinish - 1) >= pasosACompletar + CompliteSteps;
             var restSteps = _maxSteps - CompliteSteps - ((ride.From - ride.To) + (this.Position - ride.From));
-            return restSteps > 0 && (_maxSteps - CompliteSteps) >= restSteps;
+            return llegaATiempo && restSteps > 0 && (_maxSteps - CompliteSteps) >= restSteps;
         }
 
         public void RideGo(List<Ride> rides)
@@ -51,6 +53,7 @@ namespace HashCode2018
                 while (this.CompliteSteps < ride.EarliestStart)
                 {
                     this.CompliteSteps++;
+                    this.Position = ride.From;
                 }
                 if (!CanDoIt(ride))
                     continue;
