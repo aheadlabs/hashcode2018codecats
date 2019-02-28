@@ -87,10 +87,54 @@ namespace HashCode2019
                 }
             );
 
+            SimpleSlide slide3 = new SimpleSlide(
+                new List<Photo> {
+                    new Photo
+                    {
+                        Id = 7,
+                        Orientation = "V",
+                        Tags = new List<string>
+                        {
+                            "pig", "blue"
+                        }
+                    },
+                    new Photo
+                    {
+                        Id = 8,
+                        Orientation = "V",
+                        Tags = new List<string>
+                        {
+                            "red", "blue"
+                        }
+                    }
+                }
+            );
+
             int if1 = CalculateInterestFactor(slide1, slide2);
+
+            var simpleSlides = new List<SimpleSlide>();
+            simpleSlides.Add(slide1);
+            simpleSlides.Add(slide2);
+            simpleSlides.Add(slide3);
+
+            int score = CalculateScore(simpleSlides);
 
             //TODO: Y guardar el resultado con que no está implementado. 
             _provider.SaveFileOutput();
+        }
+
+        private static int CalculateScore(List<SimpleSlide> simpleSlides)
+        {
+            int score = 0;
+            for (int i = 0; i < simpleSlides.Count-1; i++)
+            {
+                var s1 = simpleSlides.ElementAt(i);
+                var s2 = simpleSlides.ElementAt(i + 1);
+
+                score += CalculateInterestFactor(s1, s2);
+            }
+
+            return score;
         }
 
         private static int CalculateInterestFactor(SimpleSlide slide1, SimpleSlide slide2)
@@ -98,7 +142,6 @@ namespace HashCode2019
             var inA = new List<string>();
             var inB = new List<string>();
             var inCommon = new List<string>();
-            var all = new List<string>();
             var factors = new List<int>();
             
             // Interesection
