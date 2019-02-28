@@ -13,14 +13,39 @@ namespace HashCode2019
         {
             get
             {
-                return new List<string>(); //Photos.SelectMany(p => p.Tags).GroupBy((s, k) => s);
+                return Photos.SelectMany(p => p.Tags).GroupBy(s => s).Select(s => s.Key).ToList();
             }
         }
 
-        public Slide(List<Photo> photos)
+        private Slide(Photo[] photos)
         {
-            Photos = photos;
+            Photos = photos.ToList();
         }
 
+
+        public static List<Slide> CreateSlids(List<Photo> photos)
+        {
+            var slids = new List<Slide>();
+            var temp = new List<Photo>();
+
+            foreach (var photo in photos)
+            {
+                if (photo.Orientation == "H")
+                    slids.Add(new Slide(new Photo[] { photo }));
+                else
+                {
+                    //TODO: como determinar si añadimos una o dos fotos??
+                    temp.Add(photo);
+
+                    if (temp.Count == 2)
+                    {
+                        slids.Add(new Slide(temp.ToArray()));
+                        temp.Clear();
+                    }
+                }
+            }
+
+            return slids;
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace HashCode2019
         private static void ProcessFile(List<Photo> contentFile)
         {
             //TODO: Una vez obtenido el contenido del fichero, hacer algo con él...
-
+            var result = Slide.CreateSlids(contentFile);
 
             //TODO: Y guardar el resultado con que no está implementado. 
             _provider.SaveFileOutput();
