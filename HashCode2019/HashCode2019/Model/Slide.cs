@@ -7,7 +7,13 @@ namespace HashCode2019
 {
     public class Slide
     {
+        #region Public Fields
+
         public List<Photo> Photos;
+
+        #endregion Public Fields
+
+        #region Public Properties
 
         public List<string> Tags
         {
@@ -17,13 +23,11 @@ namespace HashCode2019
             }
         }
 
-        private Slide(Photo[] photos)
-        {
-            Photos = photos.ToList();
-        }
+        #endregion Public Properties
 
+        #region Public Methods
 
-        public static List<Slide> CreateSlids(List<Photo> photos)
+        public static List<Slide> CreateSlides(List<Photo> photos)
         {
             var slids = new List<Slide>();
             var temp = new List<Photo>();
@@ -47,5 +51,16 @@ namespace HashCode2019
 
             return slids;
         }
+
+        #endregion Public Methods
+
+        #region Private Constructors
+
+        private Slide(Photo[] photos)
+        {
+            Photos = photos.ToList();
+        }
+
+        #endregion Private Constructors
     }
 }
