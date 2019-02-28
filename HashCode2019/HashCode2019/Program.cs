@@ -47,7 +47,7 @@ namespace HashCode2019
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("*}** ALL FILES PROCESSED ****");
+            Console.WriteLine("**** ALL FILES PROCESSED ****");
             Console.ReadKey();
         }
 
@@ -62,7 +62,7 @@ namespace HashCode2019
         private static void ProcessFile(List<Photo> contentFile)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Creating slideshow...");
+            Console.WriteLine($"Creating slideshow with {contentFile.Count} photos...");
             List<SimpleSlide> simpleSlideList = CreateSimpleSlideList(contentFile);
             int score = CalculateScore(simpleSlideList);
             Console.WriteLine($" · Created! Contains {simpleSlideList.Count} elements with score: {score}");
@@ -142,6 +142,7 @@ namespace HashCode2019
                         if (temp.Count > 1)
                         {
                             slides.Add(new SimpleSlide(temp));
+                            temp = new List<Photo>();
                         }
                     }
                 }
