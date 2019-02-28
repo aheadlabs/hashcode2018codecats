@@ -58,9 +58,26 @@ namespace HashCode2019
 
         private static void Init()
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("*** START PROCESSING FILES ***");
+            Console.WriteLine("");
             List<FileInfo> files = _provider.GetFiles();
-            files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
+            files.ForEach(f =>
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"File: {f.Name}");
+                ProcessFile(_provider.GetContentFile(f));
+            }
+                );
 
+<<<<<<< HEAD
+=======
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("**** ALL FILES PROCESSED ****");
+>>>>>>> f6a1713c4ff99cc1cdb03d8e807acadeb88f92bd
             Console.ReadKey();
         }
 
@@ -74,10 +91,11 @@ namespace HashCode2019
         /// </param>
         private static void ProcessFile(List<Photo> contentFile)
         {
-            Console.WriteLine("Creating slideshow...");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine($"Creating slideshow with {contentFile.Count} photos...");
             List<SimpleSlide> simpleSlideList = CreateSimpleSlideList(contentFile);
             int score = CalculateScore(simpleSlideList);
-            Console.WriteLine($"List with {simpleSlideList.Count} elements and score: {score}");
+            Console.WriteLine($" · Created! Contains {simpleSlideList.Count} elements with score: {score}");
             Console.WriteLine("");
 
             //TODO: Y guardar el resultado con que no está implementado.
@@ -133,6 +151,37 @@ namespace HashCode2019
             return factors.Min(f => f);
         }
 
+<<<<<<< HEAD
+=======
+        public static List<SimpleSlide> CreateSimpleSlideList(List<Photo> photos)
+        {
+            var slides = new List<SimpleSlide>();
+            var temp = new List<Photo>();
+
+            foreach (var photo in photos)
+            {
+                if (photo.Orientation == "H")
+                {
+                    slides.Add(new SimpleSlide(new List<Photo> { photo }));
+                }
+                else
+                {
+                    if (photo.Orientation == "V")
+                    {
+                        temp.Add(photo);
+                        if (temp.Count > 1)
+                        {
+                            slides.Add(new SimpleSlide(temp));
+                            temp = new List<Photo>();
+                        }
+                    }
+                }
+            }
+
+            return slides;
+        }
+
+>>>>>>> f6a1713c4ff99cc1cdb03d8e807acadeb88f92bd
         private static void Setup(string[] args)
         {
             var builder = new ConfigurationBuilder()
