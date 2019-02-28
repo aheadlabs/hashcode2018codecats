@@ -33,6 +33,9 @@ namespace HashCode2019
         {
             List<FileInfo> files = _provider.GetFiles();
             files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
+
+
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -45,11 +48,16 @@ namespace HashCode2019
         /// </param>
         private static void ProcessFile(List<Photo> contentFile)
         {
+            Console.WriteLine("Creating slideshow...");
             List<SimpleSlide> simpleSlideList = CreateSimpleSlideList(contentFile);
             int score = CalculateScore(simpleSlideList);
+            Console.WriteLine($"List with {simpleSlideList.Count} elements and score: {score}");
+            Console.WriteLine("");
 
             //TODO: Y guardar el resultado con que no está implementado. 
             _provider.SaveFileOutput();
+
+
         }
 
         private static int CalculateScore(List<SimpleSlide> simpleSlides)
@@ -108,7 +116,21 @@ namespace HashCode2019
 
             foreach (var photo in photos)
             {
-               // TODO...
+                if(photo.Orientation == "H")
+                {
+                    slides.Add(new SimpleSlide(new List<Photo>{photo}));
+                }
+                else
+                {
+                    if (photo.Orientation == "V")
+                    {
+                        temp.Add(photo);
+                        if (temp.Count > 1)
+                        {
+                            slides.Add(new SimpleSlide(temp));
+                        }
+                    }
+                }
             }
 
             return slides;

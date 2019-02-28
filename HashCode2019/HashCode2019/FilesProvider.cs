@@ -64,7 +64,7 @@ namespace HashCode2019
         /// <returns></returns>
         public bool SaveFileOutput()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }
