@@ -7,12 +7,23 @@ using System.Linq;
 
 namespace HashCode2019
 {
-    class Program
+    internal class Program
     {
-        public static Settings Configuracion { get; set; } = new Settings();
+        #region Public Properties
+
+        public static Settings Configuration { get; set; } = new Settings();
+
+        #endregion Public Properties
+
+        #region Private Fields
+
         private static FilesProvider _provider;
 
-        static void Main(string[] args)
+        #endregion Private Fields
+
+        #region Private Methods
+
+        private static void Main(string[] args)
         {
             Setup(args);
             Init();
@@ -20,22 +31,24 @@ namespace HashCode2019
 
         private static void Init()
         {
-            var files = _provider.GetFiles();
+            List<FileInfo> files = _provider.GetFiles();
             files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
         }
 
         /// <summary>
-        /// Procesa cada fichero de entrada.
+        /// Processes every input file
         /// </summary>
         /// <param name="contentFile">
-        ///     Contenido del fichero. Cada elemento en la lista representa una fila del documento.
-        ///     El formato de las filas del documento son números separados por espacios, es decir,
+        ///     File content. Every element in the list represents a line in the file.
+        ///     Line format is space separated numbers, thus an array of integers.
         ///     un array de integers.
         /// </param>
         private static void ProcessFile(List<Photo> contentFile)
         {
-            //TODO: Una vez obtenido el contenido del fichero, hacer algo con él...
-            var result = Slide.CreateSlids(contentFile);
+            // Create slides
+            List<Slide> slides = Slide.CreateSlides(contentFile);
+
+            // TODO: Processing logic
 
             SimpleSlide slide1 = new SimpleSlide(
                 new List<Photo> {
@@ -123,8 +136,10 @@ namespace HashCode2019
             .AddEnvironmentVariables("HashCode2019_")
             .AddCommandLine(args);
 
-            builder.Build().Bind(nameof(Settings), Configuracion);
-            _provider = new FilesProvider(Configuracion);
+            builder.Build().Bind(nameof(Settings), Configuration);
+            _provider = new FilesProvider(Configuration);
         }
+
+        #endregion Private Methods
     }
 }
