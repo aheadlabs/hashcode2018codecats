@@ -31,10 +31,23 @@ namespace HashCode2019
 
         private static void Init()
         {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("*** START PROCESSING FILES ***");
+            Console.WriteLine("");
             List<FileInfo> files = _provider.GetFiles();
-            files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
+            files.ForEach(f =>
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"File: {f.Name}");
+                ProcessFile(_provider.GetContentFile(f));
+            }
+                );
 
 
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("*}** ALL FILES PROCESSED ****");
             Console.ReadKey();
         }
 
@@ -48,10 +61,11 @@ namespace HashCode2019
         /// </param>
         private static void ProcessFile(List<Photo> contentFile)
         {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("Creating slideshow...");
             List<SimpleSlide> simpleSlideList = CreateSimpleSlideList(contentFile);
             int score = CalculateScore(simpleSlideList);
-            Console.WriteLine($"List with {simpleSlideList.Count} elements and score: {score}");
+            Console.WriteLine($" · Created! Contains {simpleSlideList.Count} elements with score: {score}");
             Console.WriteLine("");
 
             //TODO: Y guardar el resultado con que no está implementado. 
@@ -116,9 +130,9 @@ namespace HashCode2019
 
             foreach (var photo in photos)
             {
-                if(photo.Orientation == "H")
+                if (photo.Orientation == "H")
                 {
-                    slides.Add(new SimpleSlide(new List<Photo>{photo}));
+                    slides.Add(new SimpleSlide(new List<Photo> { photo }));
                 }
                 else
                 {
