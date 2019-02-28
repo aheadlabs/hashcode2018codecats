@@ -45,6 +45,7 @@ namespace HashCode2019
         /// </param>
         private static void ProcessFile(List<Photo> contentFile)
         {
+#if false
             // Create slides
             List<Slide> slides = Slide.CreateSlides(contentFile);
 
@@ -117,7 +118,10 @@ namespace HashCode2019
             simpleSlides.Add(slide2);
             simpleSlides.Add(slide3);
 
-            int score = CalculateScore(simpleSlides);
+            int score = CalculateScore(simpleSlides); 
+#endif
+            var simpleSlideList = CreateSimpleSlideList(contentFile);
+            int score = CalculateScore(simpleSlideList);
 
             //TODO: Y guardar el resultado con que no está implementado. 
             _provider.SaveFileOutput();
@@ -126,7 +130,7 @@ namespace HashCode2019
         private static int CalculateScore(List<SimpleSlide> simpleSlides)
         {
             int score = 0;
-            for (int i = 0; i < simpleSlides.Count-1; i++)
+            for (int i = 0; i < simpleSlides.Count - 1; i++)
             {
                 var s1 = simpleSlides.ElementAt(i);
                 var s2 = simpleSlides.ElementAt(i + 1);
@@ -143,14 +147,15 @@ namespace HashCode2019
             var inB = new List<string>();
             var inCommon = new List<string>();
             var factors = new List<int>();
-            
+
             // Interesection
             inCommon = slide1.Tags.Intersect(slide2.Tags).ToList();
 
             // In slide1, not in 2
             foreach (var tag in slide1.Tags)
             {
-                if (!inCommon.Contains(tag)){
+                if (!inCommon.Contains(tag))
+                {
                     inA.Add(tag);
                 }
             }
@@ -168,7 +173,20 @@ namespace HashCode2019
             factors.Add(inB.Count);
             factors.Add(inCommon.Count);
 
-            return  factors.Min(f => f);
+            return factors.Min(f => f);
+        }
+
+        public static List<SimpleSlide> CreateSimpleSlideList(List<Photo> photos)
+        {
+            var slides = new List<SimpleSlide>();
+            var temp = new List<Photo>();
+
+            foreach (var photo in photos)
+            {
+               // TODO...
+            }
+
+            return slides;
         }
 
         private static void Setup(string[] args)
