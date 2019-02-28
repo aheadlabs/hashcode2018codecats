@@ -31,16 +31,16 @@ namespace HashCode2019
             return files;
         }
 
-        public List<int[]> GetContentFile(FileInfo file)
+        public List<T[]> GetContentFile<T>(FileInfo file)
         {
             var stream = file.OpenText();
-            var rows = new List<int[]>();
+            var rows = new List<T[]>();
 
             while (!stream.EndOfStream)
             {
                 rows.Add(
                     stream.ReadLine().Split(' ')
-                    .Select(x => Convert.ToInt32(x)).ToArray()
+                    .Select(x => Convert.ChangeType(x, typeof(T))).Cast<T>().ToArray()
                 );
             }
 

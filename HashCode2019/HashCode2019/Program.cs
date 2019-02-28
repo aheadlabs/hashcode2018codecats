@@ -20,7 +20,7 @@ namespace HashCode2019
         private static void Init()
         {
             var files = _provider.GetFiles();
-            files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
+            files.ForEach(f => ProcessFile(_provider.GetContentFile<int>(f)));
         }
 
         /// <summary>
