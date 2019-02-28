@@ -40,7 +40,7 @@ namespace HashCode2019
             {
                 rows.Add(
                     stream.ReadLine().Split(' ')
-                    .Select(x => Convert.ChangeType(x, typeof(T))).Cast<T>().ToArray()
+                    .Select(x => (T)Convert.ChangeType(x, typeof(T))).ToArray()
                 );
             }
 
