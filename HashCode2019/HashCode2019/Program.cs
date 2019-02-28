@@ -23,6 +23,33 @@ namespace HashCode2019
 
         #region Private Methods
 
+        public static List<SimpleSlide> CreateSimpleSlideList(List<Photo> photos)
+        {
+            var slides = new List<SimpleSlide>();
+            var temp = new List<Photo>();
+
+            foreach (var photo in photos)
+            {
+                if (photo.Orientation == "H")
+                {
+                    slides.Add(new SimpleSlide(new List<Photo> { photo }));
+                }
+                else
+                {
+                    if (photo.Orientation == "V")
+                    {
+                        temp.Add(photo);
+                        if (temp.Count > 1)
+                        {
+                            slides.Add(new SimpleSlide(temp));
+                        }
+                    }
+                }
+            }
+
+            return slides;
+        }
+
         private static void Main(string[] args)
         {
             Setup(args);
@@ -33,7 +60,6 @@ namespace HashCode2019
         {
             List<FileInfo> files = _provider.GetFiles();
             files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
-
 
             Console.ReadKey();
         }
@@ -54,10 +80,8 @@ namespace HashCode2019
             Console.WriteLine($"List with {simpleSlideList.Count} elements and score: {score}");
             Console.WriteLine("");
 
-            //TODO: Y guardar el resultado con que no está implementado. 
-            _provider.SaveFileOutput();
-
-
+            //TODO: Y guardar el resultado con que no está implementado.
+            _provider.SaveFileOutput(simpleSlideList);
         }
 
         private static int CalculateScore(List<SimpleSlide> simpleSlides)
@@ -107,33 +131,6 @@ namespace HashCode2019
             factors.Add(inCommon.Count);
 
             return factors.Min(f => f);
-        }
-
-        public static List<SimpleSlide> CreateSimpleSlideList(List<Photo> photos)
-        {
-            var slides = new List<SimpleSlide>();
-            var temp = new List<Photo>();
-
-            foreach (var photo in photos)
-            {
-                if(photo.Orientation == "H")
-                {
-                    slides.Add(new SimpleSlide(new List<Photo>{photo}));
-                }
-                else
-                {
-                    if (photo.Orientation == "V")
-                    {
-                        temp.Add(photo);
-                        if (temp.Count > 1)
-                        {
-                            slides.Add(new SimpleSlide(temp));
-                        }
-                    }
-                }
-            }
-
-            return slides;
         }
 
         private static void Setup(string[] args)
