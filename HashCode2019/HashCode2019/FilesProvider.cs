@@ -36,7 +36,7 @@ namespace HashCode2019
             var stream = file.OpenText();
             var photos = new List<Photo>();
             var count = 0;
-            int rows = 0;
+            int rows = -1;
 
             while (!stream.EndOfStream)
             {
