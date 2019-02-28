@@ -31,20 +31,30 @@ namespace HashCode2019
             return files;
         }
 
-        public List<T[]> GetContentFile<T>(FileInfo file)
+        public List<Photo> GetContentFile(FileInfo file)
         {
             var stream = file.OpenText();
-            var rows = new List<T[]>();
+            var photos = new List<Photo>();
+            var count = 0;
+            int rows = 0;
 
             while (!stream.EndOfStream)
             {
-                rows.Add(
-                    stream.ReadLine().Split(' ')
-                    .Select(x => (T)Convert.ChangeType(x, typeof(T))).ToArray()
-                );
+                count++;
+
+                var line = stream.ReadLine();
+                if (line.Split(' ').Count() == 1){
+                    rows = Convert.ToInt32(line);
+                    continue;
+                }
+
+                photos.Add(new Photo { Id = count, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
             }
 
-            return rows;
+            if (photos.Count != rows)
+                throw new ApplicationException("el numero de elementos indicados en el fichero, no coincide con el numero de elementos recuperados");
+
+            return photos;
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace HashCode2019
         private static void Init()
         {
             var files = _provider.GetFiles();
-            files.ForEach(f => ProcessFile(_provider.GetContentFile<int>(f)));
+            files.ForEach(f => ProcessFile(_provider.GetContentFile(f)));
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace HashCode2019
         ///     El formato de las filas del documento son números separados por espacios, es decir,
         ///     un array de integers.
         /// </param>
-        private static void ProcessFile(List<int[]> contentFile)
+        private static void ProcessFile(List<Photo> contentFile)
         {
             //TODO: Una vez obtenido el contenido del fichero, hacer algo con él...
 
