@@ -9,47 +9,12 @@ namespace HashCode2019
 {
     internal class Program
     {
-        #region Public Properties
-
+     
         public static Settings Configuration { get; set; } = new Settings();
-
-        #endregion Public Properties
-
-        #region Private Fields
-
+               
         private static FilesProvider _provider;
 
-        #endregion Private Fields
-
-        #region Private Methods
-
-        public static List<SimpleSlide> CreateSimpleSlideList(List<Photo> photos)
-        {
-            var slides = new List<SimpleSlide>();
-            var temp = new List<Photo>();
-
-            foreach (var photo in photos)
-            {
-                if (photo.Orientation == "H")
-                {
-                    slides.Add(new SimpleSlide(new List<Photo> { photo }));
-                }
-                else
-                {
-                    if (photo.Orientation == "V")
-                    {
-                        temp.Add(photo);
-                        if (temp.Count > 1)
-                        {
-                            slides.Add(new SimpleSlide(temp));
-                        }
-                    }
-                }
-            }
-
-            return slides;
-        }
-
+        #region Core Methods
         private static void Main(string[] args)
         {
             Setup(args);
@@ -61,24 +26,34 @@ namespace HashCode2019
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("*** START PROCESSING FILES ***");
             Console.WriteLine("");
-            List<FileInfo> files = _provider.GetFiles();
-            files.ForEach(f =>
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine($"File: {f.Name}");
-                ProcessFile(_provider.GetContentFile(f));
-            }
-                );
 
-<<<<<<< HEAD
-=======
+            List<FileInfo> files = _provider.GetFiles();
+            files.ForEach
+            (f =>
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"File: {f.Name}");
+                    ProcessFile(_provider.GetContentFile(f));
+                }
+            );
 
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("**** ALL FILES PROCESSED ****");
->>>>>>> f6a1713c4ff99cc1cdb03d8e807acadeb88f92bd
             Console.ReadKey();
+        }
+
+        private static void Setup(string[] args)
+        {
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables("HashCode2019_")
+            .AddCommandLine(args);
+
+            builder.Build().Bind(nameof(Settings), Configuration);
+            _provider = new FilesProvider(Configuration);
         }
 
         /// <summary>
@@ -101,7 +76,9 @@ namespace HashCode2019
             //TODO: Y guardar el resultado con que no está implementado.
             _provider.SaveFileOutput(simpleSlideList);
         }
+        #endregion
 
+        #region CONTEST (Algorithm) Methods
         private static int CalculateScore(List<SimpleSlide> simpleSlides)
         {
             int score = 0;
@@ -151,8 +128,6 @@ namespace HashCode2019
             return factors.Min(f => f);
         }
 
-<<<<<<< HEAD
-=======
         public static List<SimpleSlide> CreateSimpleSlideList(List<Photo> photos)
         {
             var slides = new List<SimpleSlide>();
@@ -180,20 +155,9 @@ namespace HashCode2019
 
             return slides;
         }
+        #endregion
 
->>>>>>> f6a1713c4ff99cc1cdb03d8e807acadeb88f92bd
-        private static void Setup(string[] args)
-        {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .AddEnvironmentVariables("HashCode2019_")
-            .AddCommandLine(args);
 
-            builder.Build().Bind(nameof(Settings), Configuration);
-            _provider = new FilesProvider(Configuration);
-        }
 
-        #endregion Private Methods
     }
 }
