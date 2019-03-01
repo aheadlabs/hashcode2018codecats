@@ -11,16 +11,20 @@ namespace HashCode2019.Model
 
         public List<string> Tags { get; }
 
+        public int Id { get; }
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="photos">List with 1 or 2 photos to build the SimpleSlide</param>
-        public SimpleSlide(List<Photo> photos)
+        public SimpleSlide(List<Photo> photos, int id)
         {
-            Processed = false;
-            Photos = photos;
-            Tags = new List<string>();
+            this.Processed = false;
+            this.Photos = photos;
+            this.Id = id;
 
+            // Tags
+            Tags = new List<string>();
             foreach (var photo in photos)
             {
                 foreach(var tag in photo.Tags)

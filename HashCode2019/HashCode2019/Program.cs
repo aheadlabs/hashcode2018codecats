@@ -9,9 +9,9 @@ namespace HashCode2019
 {
     internal class Program
     {
-     
+
         public static Settings Configuration { get; set; } = new Settings();
-               
+
         private static FilesProvider _provider;
 
         #region Core Methods
@@ -71,25 +71,44 @@ namespace HashCode2019
             Console.WriteLine($"Creating slideshows with {contentFile.Count} photos...");
             List<SimpleSlide> simpleSlideList = CreateSimpleSlideList(contentFile);
             int score = CalculateScore(simpleSlideList);
-            Console.Write($" · Basic Contains {simpleSlideList.Count} elements with score: ");
+            Console.Write($" · Before processing... Contains {simpleSlideList.Count} elements with score: ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(score);
+            //_provider.SaveFileOutput(simpleSlideList);
 
-            // Create ENHANCED Slide Show
+            // STEP 1
             Console.ForegroundColor = ConsoleColor.DarkGray;
             List<SimpleSlide> enhancedSlideList = CreateEnhancedSlideList(simpleSlideList);
+            Console.Write($" · STEP 1 --> Contains {enhancedSlideList.Count} elements with score: ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             score = CalculateScore(enhancedSlideList);
-            Console.Write($" · ENHANCED --> Contains {simpleSlideList.Count} elements with score: ");
+            Console.WriteLine(score);
+            //_provider.SaveFileOutput(enhancedSlideList);
+
+            // STEP 2
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            List<SimpleSlide> enhancedSlideList2 = CreateEnhancedSlideList(enhancedSlideList);
+            score = CalculateScore(enhancedSlideList2);
+            Console.Write($" · STEP 2 --> Contains {enhancedSlideList2.Count} elements with score: ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(score);
+            //_provider.SaveFileOutput(enhancedSlideList2);
+
+            // STEP 3
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            List<SimpleSlide> enhancedSlideList3 = CreateEnhancedSlideList(enhancedSlideList2);
+            score = CalculateScore(enhancedSlideList3);
+            Console.Write($" · STEP 3 --> Contains {enhancedSlideList3.Count} elements with score: ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(score);
+            _provider.SaveFileOutput(enhancedSlideList3);
 
             Console.WriteLine("");
 
-            //TODO: Y guardar el resultado con que no está implementado.
-            _provider.SaveFileOutput(simpleSlideList);
+          
         }
 
-       
+
         #endregion
 
         #region CONTEST (Algorithm) Methods
@@ -146,12 +165,13 @@ namespace HashCode2019
         {
             var slides = new List<SimpleSlide>();
             var temp = new List<Photo>();
+            int id = 0;
 
             foreach (var photo in photos)
             {
                 if (photo.Orientation == "H")
                 {
-                    slides.Add(new SimpleSlide(new List<Photo> { photo }));
+                    slides.Add(new SimpleSlide(new List<Photo> { photo }, id++));
                 }
                 else
                 {
@@ -160,7 +180,7 @@ namespace HashCode2019
                         temp.Add(photo);
                         if (temp.Count > 1)
                         {
-                            slides.Add(new SimpleSlide(temp));
+                            slides.Add(new SimpleSlide(temp, id++));
                             temp = new List<Photo>();
                         }
                     }
@@ -176,32 +196,59 @@ namespace HashCode2019
             int slideCount = slidesBefore.Count;
             int bestInterest = 0;
             int bestId = 0;
+            bool matchFound = false;
 
             for (int i = 0; i < slideCount; i++)
             {
-                slidesBefore.ElementAt(i).Processed = true;
                 SimpleSlide masterSlide = slidesBefore.ElementAt(i);
 
-                for (int j = 0; j < slideCount; j++)
+                if (!masterSlide.Processed)
                 {
-                    SimpleSlide currentSlide = slidesBefore.ElementAt(i);
+                    slidesBefore.ElementAt(i).Processed = true;
 
-                    if (!currentSlide.Processed && i != j)
+                    for (int j = 0; j < slideCount; j++)
                     {
-                        var interest = CalculateInterestFactor(masterSlide, currentSlide);
-                        if (interest > bestInterest)
+                        SimpleSlide currentSlide = slidesBefore.ElementAt(j);
+                        matchFound = false;
+
+                        if (!currentSlide.Processed && i != j)
                         {
-                            bestInterest = interest;
-                            bestId = j;
+                            var interest = CalculateInterestFactor(masterSlide, currentSlide);
+                            if (interest > bestInterest)
+                            {
+                                bestInterest = interest;
+                                bestId = j;
+                            }
+                            matchFound = true;
                         }
+                        else
+                        {
+                            matchFound = false;
+                        }
+                       
+                    }
+
+                    if (matchFound)
+                    {
+                        slidesAfter.Add(masterSlide);
+                        var bestSlide = slidesBefore.ElementAt(bestId);
+                        slidesAfter.Add(bestSlide);
+                        slidesBefore.ElementAt(bestId).Processed = true;
+                        //Console.WriteLine($"Best match for Ids {masterSlide.Id} and {bestSlide.Id} is {bestInterest}");
+                        
+                        bestInterest = 0;
+                    }
+                    else
+                    {
+                        // No match found.... this one, was the last slide to match
+                        //Console.WriteLine($"Adding single slide {masterSlide.Id}");
+
+                        slidesAfter.Add(masterSlide);
                     }
                 }
-
-                slidesAfter.Add(masterSlide);
-                slidesAfter.Add(slidesBefore.ElementAt(bestId));
-                slidesBefore.ElementAt(bestId).Processed = true;
             }
-                return slidesAfter;
+            slidesAfter.ForEach(s => s.Processed = false);
+            return slidesAfter;
         }
         #endregion
 

@@ -40,13 +40,11 @@ namespace HashCode2019
         {
             var stream = file.OpenText();
             var photos = new List<Photo>();
-            var count = 0;
-            int rows = -1;
+            var id = 0;
+            int rows = 0;
 
             while (!stream.EndOfStream)
             {
-                count++;
-
                 var line = stream.ReadLine();
                 if (line.Split(' ').Count() == 1)
                 {
@@ -54,7 +52,7 @@ namespace HashCode2019
                     continue;
                 }
 
-                photos.Add(new Photo { Id = count, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
+                photos.Add(new Photo { Id = id++, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
             }
 
             if (photos.Count != rows)
