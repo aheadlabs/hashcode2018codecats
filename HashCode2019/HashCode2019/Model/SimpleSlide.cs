@@ -6,6 +6,7 @@ namespace HashCode2019.Model
 {
     public class SimpleSlide
     {
+        public bool Processed { get; set; }
         public List<Photo> Photos { get; }
 
         public List<string> Tags { get; }
@@ -16,6 +17,7 @@ namespace HashCode2019.Model
         /// <param name="photos">List with 1 or 2 photos to build the SimpleSlide</param>
         public SimpleSlide(List<Photo> photos)
         {
+            Processed = false;
             Photos = photos;
             Tags = new List<string>();
 

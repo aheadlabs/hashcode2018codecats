@@ -24,7 +24,7 @@ namespace HashCode2019
         private static void Init()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("*** START PROCESSING FILES ***");
+            Console.WriteLine($"*** START PROCESSING FILES AT {System.DateTime.Now} ***");
             Console.WriteLine("");
 
             List<FileInfo> files = _provider.GetFiles();
@@ -40,7 +40,7 @@ namespace HashCode2019
             Console.WriteLine("");
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("**** ALL FILES PROCESSED ****");
+            Console.WriteLine($"**** ALL FILES PROCESSED AT {System.DateTime.Now}****");
             Console.ReadKey();
         }
 
@@ -66,16 +66,30 @@ namespace HashCode2019
         /// </param>
         private static void ProcessFile(List<Photo> contentFile)
         {
+            // Create BASIC Slide Show
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($"Creating slideshow with {contentFile.Count} photos...");
+            Console.WriteLine($"Creating slideshows with {contentFile.Count} photos...");
             List<SimpleSlide> simpleSlideList = CreateSimpleSlideList(contentFile);
             int score = CalculateScore(simpleSlideList);
-            Console.WriteLine($" · Created! Contains {simpleSlideList.Count} elements with score: {score}");
+            Console.Write($" · Basic Contains {simpleSlideList.Count} elements with score: ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(score);
+
+            // Create ENHANCED Slide Show
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            List<SimpleSlide> enhancedSlideList = CreateEnhancedSlideList(simpleSlideList);
+            score = CalculateScore(enhancedSlideList);
+            Console.Write($" · ENHANCED --> Contains {simpleSlideList.Count} elements with score: ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(score);
+
             Console.WriteLine("");
 
             //TODO: Y guardar el resultado con que no está implementado.
             _provider.SaveFileOutput(simpleSlideList);
         }
+
+       
         #endregion
 
         #region CONTEST (Algorithm) Methods
@@ -154,6 +168,40 @@ namespace HashCode2019
             }
 
             return slides;
+        }
+
+        private static List<SimpleSlide> CreateEnhancedSlideList(List<SimpleSlide> slidesBefore)
+        {
+            List<SimpleSlide> slidesAfter = new List<SimpleSlide>();
+            int slideCount = slidesBefore.Count;
+            int bestInterest = 0;
+            int bestId = 0;
+
+            for (int i = 0; i < slideCount; i++)
+            {
+                slidesBefore.ElementAt(i).Processed = true;
+                SimpleSlide masterSlide = slidesBefore.ElementAt(i);
+
+                for (int j = 0; j < slideCount; j++)
+                {
+                    SimpleSlide currentSlide = slidesBefore.ElementAt(i);
+
+                    if (!currentSlide.Processed && i != j)
+                    {
+                        var interest = CalculateInterestFactor(masterSlide, currentSlide);
+                        if (interest > bestInterest)
+                        {
+                            bestInterest = interest;
+                            bestId = j;
+                        }
+                    }
+                }
+
+                slidesAfter.Add(masterSlide);
+                slidesAfter.Add(slidesBefore.ElementAt(bestId));
+                slidesBefore.ElementAt(bestId).Processed = true;
+            }
+                return slidesAfter;
         }
         #endregion
 
