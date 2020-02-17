@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PracticeRound2020": {
+      "commandName": "Project",
+      "commandLineArgs": "\"Data/a_example.in\""
+    }
+  }
+}
