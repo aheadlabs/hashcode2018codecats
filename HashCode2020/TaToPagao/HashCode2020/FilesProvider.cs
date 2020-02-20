@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
-using HashCode2019.Model;
+using HashCode2020.Model;
 
-namespace HashCode2019
+namespace HashCode2020
 {
     /// <summary>
     /// Provee la recuperación de los ficheros, su lectura en lineas de arrays de integer y el volcado

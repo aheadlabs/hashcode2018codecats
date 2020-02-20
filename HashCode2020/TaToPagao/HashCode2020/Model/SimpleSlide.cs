@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HashCode2019.Model
+namespace HashCode2020.Model
 {
     public class SimpleSlide
     {

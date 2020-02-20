@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HashCode2019
+namespace HashCode2020
 {
     public class Photo
     {

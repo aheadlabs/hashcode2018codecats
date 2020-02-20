@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace HashCode2019
+namespace HashCode2020
 {
     public class Slide
     {
