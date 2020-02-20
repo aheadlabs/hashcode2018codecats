@@ -72,7 +72,7 @@ namespace HashCode2020.Model
             return bestBook;
         }
 
-        public List<Library> Process()
+        public void Process()
         {
             Library bar = null;
             Book bestBook = null;
@@ -99,12 +99,17 @@ namespace HashCode2020.Model
                     bestBook = null;
                 }
 
-                if (bar.AddedBooks.Count > 0) {
+                if (bar.AddedBooks.Count > 0)
+                {
                     this.SelectedLibraries.Add(bar);
                     this.AvailableLibraries.Remove(bar);
                     currentDay += bar.StartUpDays;
                 }
             }
+        }
+
+        public List<Library> GetProcessedLibraries()
+        {
             return this.SelectedLibraries;
         }
     }
