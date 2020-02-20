@@ -19,6 +19,7 @@ namespace HashCode2020.Model
             this.TimeLimit = days;
             this.FileInfo = fileInfo;
             this.AvailableLibraries = new List<Library>();
+            this.SelectedLibraries = new List<Library>();
             this.BookCollection = new List<Book>();
         }
 
