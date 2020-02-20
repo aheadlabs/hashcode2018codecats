@@ -4,22 +4,13 @@ using System.Text;
 
 namespace HashCode2020
 {
-    /// <summary>
-    /// Objeto de configuración.
-    /// </summary>
     public class Settings
     {
         private string _dataDirectory = string.Empty;
-        /// <summary>
-        /// Ruta del directorio donde se encuentran los ficheros.
-        /// Puede ser relativa (~/) o absoluta.
-        /// </summary>
+
         public string DataDirectory
         {
-            get
-            {
-                return _dataDirectory;
-            }
+            get => _dataDirectory;
             set
             {
                 if (!value.StartsWith("~/") && !System.IO.Directory.Exists(value))
@@ -32,16 +23,10 @@ namespace HashCode2020
         }
 
         private string _output = string.Empty;
-        /// <summary>
-        /// Ruta del directorio donde guardar el fichero de salida.
-        /// Puede ser relativa (~/) o absoluta.
-        /// </summary>
+
         public string OutputDirectory
         {
-            get
-            {
-                return _output;
-            }
+            get => _output;
             set
             {
                 _output = value.Replace('/', System.IO.Path.DirectorySeparatorChar).Replace('\\', System.IO.Path.DirectorySeparatorChar).Replace($"~{System.IO.Path.DirectorySeparatorChar}", $"{System.IO.Directory.GetCurrentDirectory()}{System.IO.Path.DirectorySeparatorChar}");
@@ -50,9 +35,6 @@ namespace HashCode2020
             }
         }
 
-        /// <summary>
-        /// Nombres de los ficheros que se quieren tener en cuenta para su lectura.
-        /// </summary>
         public List<string> FilesName { get; set; }
     }
 }

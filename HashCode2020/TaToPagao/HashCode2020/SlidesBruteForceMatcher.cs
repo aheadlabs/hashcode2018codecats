@@ -7,25 +7,25 @@ namespace HashCode2020
     {
         #region Private Fields
 
-        private readonly List<Slide> _slides;
+        //private readonly List<Slide> _slides;
 
-        #endregion Private Fields
+        //#endregion Private Fields
 
-        #region Public Constructors
+        //#region Public Constructors
 
-        public SlidesBruteForceMatcher(List<Slide> slides)
-        {
-            _slides = slides;
-        }
+        //public SlidesBruteForceMatcher(List<Slide> slides)
+        //{
+        //    _slides = slides;
+        //}
 
-        #endregion Public Constructors
+        //#endregion Public Constructors
 
-        #region Private Methods
+        //#region Private Methods
 
-        private int CompareSlides(Slide slide1, Slide slide2)
-        {
-            throw new NotImplementedException();
-        }
+        //private int CompareSlides(Slide slide1, Slide slide2)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         #endregion Private Methods
     }
