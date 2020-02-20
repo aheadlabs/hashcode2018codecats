@@ -1,27 +1,29 @@
+
 // Potential library score today
-
-
 int calculateLibraryScore(Library lib, int daysLeft, List<Books> allBooks) {
     int scanDays = daysLeft - lib.StartUpDays;
     if (scanDays <= 0) return 0;
     int scanBooks = scanDays * lib.BooksPerDay;
     scanBooks = min(scanBooks, lib.Books.size() );
     int score = 0;
-    for (int i = 0; i < scanBooks; i++) {
-        bookIndex = lib.Books[i];
-        score += allBooks.get(bookIndex);
+    for (Book book : lib.Books) {
+        bookScore = allBooks.get(book.ID).Score;
+        if (bookScore > 0)
+            score += bookScore;
+        else 
+            lib.Books.remove(book);
     }
     return score;
 }
 
-Library recalculateLibrariesScore_and_getBest(List<Library> libs, int daysLeft) {
+Library recalculateLibrariesScore_and_getBest(List<Library> libs, List<Books> allBooks, int daysLeft) {
     int bestScore = -1;
     Library bestLibrary = null;
     for (Library lib : libs) {
-        if (lib.score > bestScore){
+        if (lib.Score > bestScore){
             lib.score = calculateLibraryScore(lib, daysLeft);
-            if (lib.score > bestScore) {
-                bestScore = lib.score;
+            if (lib.Score > bestScore) {
+                bestScore = lib.Score;
                 bestLibrary = lib;
             }
         }
@@ -29,3 +31,41 @@ Library recalculateLibrariesScore_and_getBest(List<Library> libs, int daysLeft) 
     return bestLibrary;
 }
 
+void main() {
+    // Read
+    // ...
+    int totalDays = ...
+    List<Books> books = ...
+    List<Library> libs = ...
+
+    for (Library lib : libs) {
+        libs.Books.sort();
+    }
+
+    // Process
+    int today = 0;
+
+    Library bestLib = recalculateLibrariesScore_and_getBest(libs, books, totalDays - today);
+    today += bestLib.StartUpDays;
+    while (today < totalDays) {
+        
+        // Show: 
+        int scanDays = totalDays - today;
+        int scanBooks = scanDays * bestLib.BooksPerDay;
+        scanBooks = min(scanBooks, bestLib.Books.size() );
+        print(bestLib.ID);
+        int scannedBooks = 0;
+        for (Book book : bestLib.Books) {
+            print(book.ID);
+            books.Score = 0;
+            scannedBooks++;
+            if (scannedBooks >= scanBooks) break;
+        }
+        bestLib.Score = 0;
+
+        Library bestLib = recalculateLibrariesScore_and_getBest(libs, books, totalDays - today);
+        today += bestLib.StartUpDays;
+        
+    }
+
+}
