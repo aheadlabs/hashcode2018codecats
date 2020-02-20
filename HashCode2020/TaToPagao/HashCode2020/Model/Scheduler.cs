@@ -6,20 +6,21 @@ namespace HashCode2020.Model
 {
     public class Scheduler
     {
-        public List<Library> Libraries { get; set; }
+        public List<Library> AvailableLibraries { get; set; }
+        public List<Library> SelectedLibraries { get; set; }
         public List<Book> BookCollection { get; set; }
         public int TimeLimit { get; set; }
 
         public Scheduler(int days)
         {
             this.TimeLimit = days;
-            this.Libraries = new List<Library>();
+            this.AvailableLibraries = new List<Library>();
             this.BookCollection = new List<Book>();
         }
 
         public void AddLibrary(Library foo)
         {
-            Libraries.Add(foo);
+            AvailableLibraries.Add(foo);
         }
 
         public void AddBook(Book foo)
@@ -27,11 +28,11 @@ namespace HashCode2020.Model
             BookCollection.Add(foo);
         }
 
-        public Library GetBestLibrary(int day)
+        public Library FindBestLibrary(int day)
         {
             Library bestLibrary = null;
             int timeLeft = this.TimeLimit - day;
-            foreach (Library foo in this.Libraries)
+            foreach (Library foo in this.AvailableLibraries)
             {
                 if (bestLibrary == null)
                     bestLibrary = foo;
@@ -39,6 +40,67 @@ namespace HashCode2020.Model
                     bestLibrary = foo;
             }
             return bestLibrary;
+        }
+
+        public Book FindBestBook()
+        {
+            Book bestBook = null;
+            foreach (Book foo in BookCollection)
+            {
+                if (bestBook == null)
+                    bestBook = foo;
+
+                if (foo.Score > bestBook.Score)
+                    bestBook = foo;
+            }
+            BookCollection.Remove(bestBook);
+            return bestBook;
+        }
+
+        public Book FindBestBookInCatalogue(List<Book> catalogue)
+        {
+            Book bestBook = null;
+            foreach (Book foo in catalogue)
+            {
+                if (bestBook == null)
+                    bestBook = foo;
+
+                if (foo.Score > bestBook.Score)
+                    bestBook = foo;
+            }
+
+            return bestBook;
+        }
+
+        public List<Library> Process()
+        {
+            Library bar = null;
+            for (int currentDay = 0; currentDay < this.TimeLimit; currentDay++)
+            {
+                bar = FindBestLibrary(currentDay);
+                for (int i = bar.BookCapacity; i > 0; i--)
+                {
+                    Book bestBook = null;
+                    while (bestBook == null && this.BookCollection.Count > 0)
+                    {
+                        Book foo = FindBestBookInCatalogue(bar.AvailableBooks);
+                        if (this.BookCollection.Contains(foo))
+                        {
+                            bestBook = foo;
+                            this.BookCollection.Remove(foo);
+                        }
+                    }
+
+                    if (bestBook != null)
+                    {
+                        bar.AddAddedBook(bestBook);
+                    }
+                }
+                this.SelectedLibraries.Add(bar);
+                this.AvailableLibraries.Remove(bar);
+                currentDay += bar.StartUpDays;
+            }
+            return this.SelectedLibraries;
         }
     }
 }
