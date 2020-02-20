@@ -6,12 +6,12 @@ namespace HashCode2020.Model
 {
     public class Library
     {
-        int ID { get; set; }
-        int BookCapacity { get; set; }
-        int StartUpDays { get; set; }
-        int BooksPerDay { get; set; }
-        List<Book> AvailableBooks { get; set; }
-        List<Book> AddedBooks { get; set; }
+        public int ID { get; set; }
+        public int BookCapacity { get; set; }
+        public int StartUpDays { get; set; }
+        public int BooksPerDay { get; set; }
+        public List<Book> AvailableBooks { get; set; }
+        public List<Book> AddedBooks { get; set; }
 
         public Library(int id, int capacity, int days, int booksPerDay)
         {
@@ -23,9 +23,13 @@ namespace HashCode2020.Model
             this.AddedBooks = new List<Book>();
         }
 
-        public void addBook(Book book)
+        public void AddAvailableBook(Book book)
         {
             this.AvailableBooks.Add(book);
+        }
+        public void AddAddedBook(Book book)
+        {
+            this.AddedBooks.Add(book);
         }
 
         public int CalculateScore()
@@ -38,7 +42,7 @@ namespace HashCode2020.Model
             return score;
         }
 
-        public int CalculatePower(int daysLeft)
+        public int CalculateTotalBooks(int daysLeft)
         {
             int totalDays = daysLeft - this.StartUpDays;
             return totalDays * this.BooksPerDay;
