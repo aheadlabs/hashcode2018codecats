@@ -4,7 +4,10 @@ using System.Text;
 
 namespace HashCode2020.Models
 {
-    class Output
+    public class Output
     {
+        // Line 1: Libraries in output to score
+        public int scoringLibraries;
+        public LibrariesContent[] librariesContent;
     }
 }
