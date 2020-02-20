@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HashCode2020": {
+      "commandName": "Project",
+      "commandLineArgs": "Data/c_incunabula.txt"
+    }
+  }
+}
