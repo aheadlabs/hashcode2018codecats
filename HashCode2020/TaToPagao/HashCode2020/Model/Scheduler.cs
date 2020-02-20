@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace HashCode2020.Model
@@ -11,9 +12,12 @@ namespace HashCode2020.Model
         public List<Book> BookCollection { get; set; }
         public int TimeLimit { get; set; }
 
-        public Scheduler(int days)
+        public FileInfo FileInfo { get; set; }
+
+        public Scheduler(int days, FileInfo fileInfo)
         {
             this.TimeLimit = days;
+            this.FileInfo = fileInfo;
             this.AvailableLibraries = new List<Library>();
             this.BookCollection = new List<Book>();
         }
