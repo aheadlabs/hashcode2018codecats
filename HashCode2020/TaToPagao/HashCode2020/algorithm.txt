@@ -1,30 +1,31 @@
 // Potential library score today
 
 
-int calculateLibraryScore(Library lib, int daysLeft) {
-    int scanDays = daysLeft - lib.registerDays;
+int calculateLibraryScore(Library lib, int daysLeft, List<Books> allBooks) {
+    int scanDays = daysLeft - lib.StartUpDays;
     if (scanDays <= 0) return 0;
-    int scanBooks = scanDays * lib.booksPerDay;
-    scanBooks = min(scanBooks, lib.books.length() );
+    int scanBooks = scanDays * lib.BooksPerDay;
+    scanBooks = min(scanBooks, lib.Books.size() );
     int score = 0;
     for (int i = 0; i < scanBooks; i++) {
-        bookIndex = lib.books[i];
-        score += allBooks[bookIndex];
+        bookIndex = lib.Books[i];
+        score += allBooks.get(bookIndex);
     }
     return score;
 }
 
-int recalculateLibrariesScore_and_getBest(Library[] libs, int daysLeft) {
+Library recalculateLibrariesScore_and_getBest(List<Library> libs, int daysLeft) {
     int bestScore = -1;
-    int bestLibrary = -1;
-    for (int i = 0; i < libs.length(); i++) {
-        if (libs[i].score > bestScore){
-            libs[i].score = calculateLibraryScore(libs[i], daysLeft);
-            if (libs[i].score > bestScore) {
-                bestScore = libs[i].score;
-                bestLibrary = i;
+    Library bestLibrary = null;
+    for (Library lib : libs) {
+        if (lib.score > bestScore){
+            lib.score = calculateLibraryScore(lib, daysLeft);
+            if (lib.score > bestScore) {
+                bestScore = lib.score;
+                bestLibrary = lib;
             }
         }
     }
     return bestLibrary;
 }
+
