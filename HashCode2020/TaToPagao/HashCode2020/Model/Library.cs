@@ -56,5 +56,20 @@ namespace HashCode2020.Model
 
             return false;
         }
+
+        public int CalculateLibraryScore(int daysLeft)
+        {
+            int scanDays = daysLeft - this.StartUpDays;
+            if (scanDays <= 0) return 0;
+            int scanBooks = scanDays * this.BooksPerDay;
+            scanBooks = Math.Min(scanBooks, this.AvailableBooks.Count);
+            int score = 0;
+            foreach (Book book in this.AvailableBooks)
+            {
+                if (book.Score > 0)
+                    score += book.Score;
+            }
+            return score;
+        }
     }
 }
