@@ -64,10 +64,10 @@ namespace HashCode2020.Model
             int scanBooks = scanDays * this.BooksPerDay;
             scanBooks = Math.Min(scanBooks, this.AvailableBooks.Count);
             int score = 0;
-            foreach (Book book in this.AvailableBooks)
+            for (int i = 0; i < scanBooks; i++)
             {
-                if (book.Score > 0)
-                    score += book.Score;
+                if (this.AvailableBooks[i].Score > 0)
+                    score += this.AvailableBooks[i].Score;
             }
             return score;
         }
