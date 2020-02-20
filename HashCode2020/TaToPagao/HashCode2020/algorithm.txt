@@ -1,0 +1,24 @@
+// Potential library score today
+int calculateLibraryScore(Library lib, int daysLeft) {
+    int scanDays = daysLeft - lib.registerDays;
+    if (scanDays <= 0) return 0;
+    int scanBooks = scanDays * lib.booksPerDay;
+    scanBooks = min(scanBooks, lib.books.length() );
+    int score = 0;
+    for (int i = 0; i < scanBooks; i++) {
+        score += lib.books[i];
+    }
+    return score;
+}
+
+void recalculateLibrariesScore(Library[] libs, int daysLeft) {
+    int bestScore = -1;
+    for (Library lib : libs) {
+        if (lib.score > bestScore){
+            lib.score = calculateLibraryScore(lib, daysLeft);
+            if (lib.score > bestScore) {
+                bestScore = lib.score;
+            }
+        }
+    }
+}
