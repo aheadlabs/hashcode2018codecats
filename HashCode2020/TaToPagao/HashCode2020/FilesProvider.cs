@@ -43,7 +43,7 @@ namespace HashCode2020
             string[] firstLine = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
             string[] bookScores = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-            Scheduler scheduler = new Scheduler(Int32.Parse(firstLine[2]))
+            Scheduler scheduler = new Scheduler(Int32.Parse(firstLine[2]), file)
             {
                 BookCollection = ModelHelpers.ParseBooksFromLine(bookScores)
             };
@@ -52,7 +52,7 @@ namespace HashCode2020
             while (!stream.EndOfStream)
             {
                 string[] recordLine1 = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                scheduler.Libraries.Add(ModelHelpers.ParseLibraryFromLine(libraryCounter, recordLine1));
+                scheduler.AvailableLibraries.Add(ModelHelpers.ParseLibraryFromLine(libraryCounter, recordLine1));
                 libraryCounter++;
 
                 string[] recordLine2 = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
@@ -78,23 +78,29 @@ namespace HashCode2020
         {
             // TODO create output file
 
-            //StringBuilder file = new StringBuilder();
+            StringBuilder file = new StringBuilder();
 
-            //file.AppendLine(simpleSlidesList.Count.ToString());
+            file.AppendLine(schedulerList.Count.ToString());
 
-            //StringBuilder line = new StringBuilder();
-            //foreach (SimpleSlide simpleSlide in simpleSlidesList)
-            //{
-            //    foreach (Photo photo in simpleSlide.Photos)
-            //    {
-            //        line.Append($"{photo.Id.ToString()} ");
-            //    }
+            StringBuilder line = new StringBuilder();
+            foreach (Scheduler scheduler in schedulerList)
+            {
+                foreach (Library library in scheduler.SelectedLibraries)
+                {
+                    line.Append($"{library.ID.ToString()} {library.AddedBooks.Count.ToString()}");
+                    StringBuilder books = new StringBuilder();
+                    foreach (Book addedBook in library.AddedBooks)
+                    {
+                        books.Append($"{addedBook.ID.ToString()} ");
+                    }
+                    line.Append(books.ToString().Trim());
+                }
 
-            //    file.AppendLine(line.ToString().TrimEnd());
-            //    line.Clear();
-            //}
+                file.AppendLine(line.ToString().TrimEnd());
+                line.Clear();
 
-            //File.WriteAllText(Path.Combine(_config.OutputDirectory, $"{DateTime.Now.ToLongTimeString().Replace(":", "_")}.txt"), file.ToString());
+                File.WriteAllText(Path.Combine(_config.OutputDirectory, $"{DateTime.Now.ToLongTimeString().Replace(":", "_")}.txt"), file.ToString());
+            }
 
             return true;
         }
