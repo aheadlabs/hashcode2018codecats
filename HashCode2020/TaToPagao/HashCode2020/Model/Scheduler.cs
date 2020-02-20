@@ -36,7 +36,7 @@ namespace HashCode2020.Model
             {
                 if (bestLibrary == null)
                     bestLibrary = foo;
-                else if (foo.CalculateTotalBooks(timeLeft) > bestLibrary.CalculateTotalBooks(timeLeft))
+                else if (foo.CalculateLibraryScore(timeLeft) > bestLibrary.CalculateLibraryScore(timeLeft))
                     bestLibrary = foo;
             }
             return bestLibrary;
