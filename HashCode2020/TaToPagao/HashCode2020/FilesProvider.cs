@@ -52,11 +52,13 @@ namespace HashCode2020
             while (!stream.EndOfStream)
             {
                 string[] recordLine1 = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                scheduler.AvailableLibraries.Add(ModelHelpers.ParseLibraryFromLine(libraryCounter, recordLine1));
-                libraryCounter++;
+                Library library = ModelHelpers.ParseLibraryFromLine(libraryCounter, recordLine1);
 
                 string[] recordLine2 = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                scheduler.BookCollection = ModelHelpers.GetBooksInLibraryFromLine(recordLine2, scheduler.BookCollection);
+                library.AvailableBooks = ModelHelpers.GetBooksInLibraryFromLine(recordLine2, scheduler.BookCollection);
+                scheduler.AvailableLibraries.Add(library);
+
+                libraryCounter++;
 
                 //    string line = stream.ReadLine();
                 //    if (line.Split(' ').Count() == 1)
