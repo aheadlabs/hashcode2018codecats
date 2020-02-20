@@ -7,16 +7,12 @@ using HashCode2020.Model;
 
 namespace HashCode2020
 {
-    /// <summary>
-    /// Provee la recuperación de los ficheros, su lectura en lineas de arrays de integer y el volcado
-    /// del fichero resultado (no implementado).
-    /// </summary>
     public class FilesProvider
     {
         #region Public Constructors
 
         /// <summary>
-        /// Objeto de configuración de donde recuperar, ruta de la carpeta y nombres de ficheros.
+        /// Directory path and file names
         /// </summary>
         /// <param name="config"></param>
         public FilesProvider(Settings config)
@@ -36,57 +32,57 @@ namespace HashCode2020
             return files;
         }
 
-        public List<Photo> GetContentFile(FileInfo file)
+        public Scheduler GetContentFile(FileInfo file)
         {
-            var stream = file.OpenText();
-            var photos = new List<Photo>();
-            var id = 0;
+            StreamReader stream = file.OpenText();
+            int id = 0;
             int rows = 0;
 
-            while (!stream.EndOfStream)
-            {
-                var line = stream.ReadLine();
-                if (line.Split(' ').Count() == 1)
-                {
-                    rows = Convert.ToInt32(line);
-                    continue;
-                }
+            // Read first line
+            string[] firstLine = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            string[] bookScores = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            Scheduler scheduler = new Scheduler(Int32.Parse(firstLine[2]));
 
-                photos.Add(new Photo { Id = id++, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
-            }
 
-            if (photos.Count != rows)
-                throw new ApplicationException("el numero de elementos indicados en el fichero, no coincide con el numero de elementos recuperados");
+            //while (!stream.EndOfStream)
+            //{
+            //    string line = stream.ReadLine();
+            //    if (line.Split(' ').Count() == 1)
+            //    {
+            //        rows = Convert.ToInt32(line);
+            //        continue;
+            //    }
 
-            return photos;
+            //    photos.Add(new Photo { Id = id++, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
+            //}
+
+            //if (photos.Count != rows)
+            //    throw new ApplicationException("el numero de elementos indicados en el fichero, no coincide con el numero de elementos recuperados");
+
+            return scheduler;
         }
 
-        /// <summary>
-        /// No implementado.
-        /// TODO: pendiente de ver que pasar le para guardar.
-        /// </summary>
-        /// <returns></returns>
-        public bool SaveFileOutput(List<SimpleSlide> simpleSlidesList)
+        public bool SaveFileOutput(List<Scheduler> schedulerList)
         {
             // TODO create output file
 
-            StringBuilder file = new StringBuilder();
+            //StringBuilder file = new StringBuilder();
 
-            file.AppendLine(simpleSlidesList.Count.ToString());
+            //file.AppendLine(simpleSlidesList.Count.ToString());
 
-            StringBuilder line = new StringBuilder();
-            foreach (SimpleSlide simpleSlide in simpleSlidesList)
-            {
-                foreach (Photo photo in simpleSlide.Photos)
-                {
-                    line.Append($"{photo.Id.ToString()} ");
-                }
+            //StringBuilder line = new StringBuilder();
+            //foreach (SimpleSlide simpleSlide in simpleSlidesList)
+            //{
+            //    foreach (Photo photo in simpleSlide.Photos)
+            //    {
+            //        line.Append($"{photo.Id.ToString()} ");
+            //    }
 
-                file.AppendLine(line.ToString().TrimEnd());
-                line.Clear();
-            }
+            //    file.AppendLine(line.ToString().TrimEnd());
+            //    line.Clear();
+            //}
 
-            File.WriteAllText(Path.Combine(_config.OutputDirectory, $"{DateTime.Now.ToLongTimeString().Replace(":", "_")}.txt"), file.ToString());
+            //File.WriteAllText(Path.Combine(_config.OutputDirectory, $"{DateTime.Now.ToLongTimeString().Replace(":", "_")}.txt"), file.ToString());
 
             return true;
         }

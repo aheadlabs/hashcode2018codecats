@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HashCode2020.Model
 {
-    class Scheduler
+    public class Scheduler
     {
         public List<Library> Libraries { get; set; }
         public List<Book> BookCollection { get; set; }
