@@ -1,11 +1,11 @@
-﻿using HashCode2019.Model;
+﻿using HashCode2020.Model;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace HashCode2019
+namespace HashCode2020
 {
     internal class Program
     {
@@ -49,7 +49,7 @@ namespace HashCode2019
             var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
-            .AddEnvironmentVariables("HashCode2019_")
+            .AddEnvironmentVariables("HashCode2020_")
             .AddCommandLine(args);
 
             builder.Build().Bind(nameof(Settings), Configuration);
