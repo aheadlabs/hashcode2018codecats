@@ -6,11 +6,11 @@ namespace HashCode2020.Model
 {
     class Scheduler
     {
-        List<Library> Libraries { get; set; }
-        List<Book> BookCollection { get; set; }
-        int TimeLimit { get; set; }
+        public List<Library> Libraries { get; set; }
+        public List<Book> BookCollection { get; set; }
+        public int TimeLimit { get; set; }
 
-        Scheduler(int days)
+        public Scheduler(int days)
         {
             this.TimeLimit = days;
             this.Libraries = new List<Library>();
@@ -35,7 +35,7 @@ namespace HashCode2020.Model
             {
                 if (bestLibrary == null)
                     bestLibrary = foo;
-                else if (foo.CalculatePower(timeLeft) > bestLibrary.CalculatePower(timeLeft))
+                else if (foo.CalculateTotalBooks(timeLeft) > bestLibrary.CalculateTotalBooks(timeLeft))
                     bestLibrary = foo;
             }
             return bestLibrary;
