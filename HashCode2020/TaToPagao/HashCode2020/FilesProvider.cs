@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Security.Cryptography;
 using HashCode2020.Model;
 
 namespace HashCode2020
@@ -41,20 +42,31 @@ namespace HashCode2020
             // Read first line
             string[] firstLine = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
             string[] bookScores = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            Scheduler scheduler = new Scheduler(Int32.Parse(firstLine[2]));
 
+            Scheduler scheduler = new Scheduler(Int32.Parse(firstLine[2]))
+            {
+                BookCollection = ModelHelpers.ParseBooksFromLine(bookScores)
+            };
 
-            //while (!stream.EndOfStream)
-            //{
-            //    string line = stream.ReadLine();
-            //    if (line.Split(' ').Count() == 1)
-            //    {
-            //        rows = Convert.ToInt32(line);
-            //        continue;
-            //    }
+            int libraryCounter = 0;
+            while (!stream.EndOfStream)
+            {
+                string[] recordLine1 = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                scheduler.Libraries.Add(ModelHelpers.ParseLibraryFromLine(libraryCounter, recordLine1));
+                libraryCounter++;
 
-            //    photos.Add(new Photo { Id = id++, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
-            //}
+                string[] recordLine2 = stream.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                scheduler.BookCollection = ModelHelpers.GetBooksInLibraryFromLine(recordLine2, scheduler.BookCollection);
+
+                //    string line = stream.ReadLine();
+                //    if (line.Split(' ').Count() == 1)
+                //    {
+                //        rows = Convert.ToInt32(line);
+                //        continue;
+                //    }
+
+                //    photos.Add(new Photo { Id = id++, Orientation = line.Split(' ')[0], Tags = new List<string>(line.Split(' ').Skip(2)) });
+            }
 
             //if (photos.Count != rows)
             //    throw new ApplicationException("el numero de elementos indicados en el fichero, no coincide con el numero de elementos recuperados");
