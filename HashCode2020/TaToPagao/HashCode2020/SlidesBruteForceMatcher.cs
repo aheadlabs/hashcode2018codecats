@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HashCode2019
+namespace HashCode2020
 {
     public class SlidesBruteForceMatcher
     {

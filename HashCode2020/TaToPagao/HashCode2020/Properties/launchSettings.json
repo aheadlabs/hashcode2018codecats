@@ -1,10 +1,10 @@
 {
   "profiles": {
-    "HashCode2019": {
+    "HashCode2020": {
       "commandName": "Project",
       "commandLineArgs": "object:property=value",
       "environmentVariables": {
-        "HashCode2019_object__property": "value"
+        "HashCode2020_object__property": "value"
       }
     }
   }
