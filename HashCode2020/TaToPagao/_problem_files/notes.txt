@@ -1,0 +1,22 @@
+tags
+cat, beach, sun
+
+orientation
+horizontal, vertical
+
+slides
+1 slide = 1 horizontal photo (slide tags = photo tags)
+1 slide = 2 vertical photo (slide tags = photo 1 tags + photo 2 tags)
+
+slideshow >= 1 slide
+photo can or can't be used
+==========================
+\n line endings (as UNIX)
+
+
+
+
+Generador de outputs
+¿Scoring?
+	Función min()
+	
