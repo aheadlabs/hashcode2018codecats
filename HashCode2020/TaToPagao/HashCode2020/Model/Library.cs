@@ -10,6 +10,7 @@ namespace HashCode2020.Model
         public int BookCapacity { get; set; }
         public int StartUpDays { get; set; }
         public int BooksPerDay { get; set; }
+        public int DaysToWork { get; set; }
         public List<Book> AvailableBooks { get; set; }
         public List<Book> AddedBooks { get; set; }
 
@@ -46,6 +47,14 @@ namespace HashCode2020.Model
         {
             int totalDays = daysLeft - this.StartUpDays;
             return totalDays * this.BooksPerDay;
+        }
+
+        internal bool HasRoom()
+        {
+            if (this.AddedBooks.Count / this.DaysToWork > this.BooksPerDay)
+                return true;
+
+            return false;
         }
     }
 }

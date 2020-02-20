@@ -75,30 +75,35 @@ namespace HashCode2020.Model
         public List<Library> Process()
         {
             Library bar = null;
-            for (int currentDay = 0; currentDay < this.TimeLimit; currentDay++)
+            Book bestBook = null;
+            for (int currentDay = 0; currentDay < this.TimeLimit && this.BookCollection.Count > 0; currentDay++)
             {
                 bar = FindBestLibrary(currentDay);
-                for (int i = bar.BookCapacity; i > 0; i--)
+                bar.DaysToWork = this.TimeLimit - currentDay;
+                for (int i = bar.BookCapacity; i > 0 && bar.HasRoom(); i--)
                 {
-                    Book bestBook = null;
-                    while (bestBook == null && this.BookCollection.Count > 0)
+                    while (bestBook == null)
                     {
                         Book foo = FindBestBookInCatalogue(bar.AvailableBooks);
                         if (this.BookCollection.Contains(foo))
                         {
                             bestBook = foo;
-                            this.BookCollection.Remove(foo);
                         }
                     }
 
                     if (bestBook != null)
                     {
                         bar.AddAddedBook(bestBook);
+                        this.BookCollection.Remove(bestBook);
                     }
+                    bestBook = null;
                 }
-                this.SelectedLibraries.Add(bar);
-                this.AvailableLibraries.Remove(bar);
-                currentDay += bar.StartUpDays;
+
+                if (bar.AddedBooks.Count > 0) {
+                    this.SelectedLibraries.Add(bar);
+                    this.AvailableLibraries.Remove(bar);
+                    currentDay += bar.StartUpDays;
+                }
             }
             return this.SelectedLibraries;
         }
