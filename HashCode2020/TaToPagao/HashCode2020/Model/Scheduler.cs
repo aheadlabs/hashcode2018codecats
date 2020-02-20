@@ -8,7 +8,6 @@ namespace HashCode2020.Model
     {
         List<Library> Libraries { get; set; }
         List<Book> BookCollection { get; set; }
-
         int TimeLimit { get; set; }
 
         Scheduler(int days)
@@ -18,14 +17,28 @@ namespace HashCode2020.Model
             this.BookCollection = new List<Book>();
         }
 
-        void AddLibrary(Library foo)
+        public void AddLibrary(Library foo)
         {
             Libraries.Add(foo);
         }
 
-        void AddBook(Book foo)
+        public void AddBook(Book foo)
         {
             BookCollection.Add(foo);
+        }
+
+        public Library GetBestLibrary(int day)
+        {
+            Library bestLibrary = null;
+            int timeLeft = this.TimeLimit - day;
+            foreach (Library foo in this.Libraries)
+            {
+                if (bestLibrary == null)
+                    bestLibrary = foo;
+                else if (foo.CalculatePower(timeLeft) > bestLibrary.CalculatePower(timeLeft))
+                    bestLibrary = foo;
+            }
+            return bestLibrary;
         }
     }
 }

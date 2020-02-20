@@ -4,36 +4,44 @@ using System.Text;
 
 namespace HashCode2020.Model
 {
-    class Library
+    public class Library
     {
         int ID { get; set; }
         int BookCapacity { get; set; }
         int StartUpDays { get; set; }
         int BooksPerDay { get; set; }
         List<Book> AvailableBooks { get; set; }
+        List<Book> AddedBooks { get; set; }
 
-        Library(int id, int capacity, int days, int booksPerDay)
+        public Library(int id, int capacity, int days, int booksPerDay)
         {
             this.ID = id;
             this.BookCapacity = capacity;
             this.StartUpDays = days;
             this.BooksPerDay = booksPerDay;
             this.AvailableBooks = new List<Book>();
+            this.AddedBooks = new List<Book>();
         }
 
-        void addBook(Book book)
+        public void addBook(Book book)
         {
             this.AvailableBooks.Add(book);
         }
 
-        int CalculateScore()
+        public int CalculateScore()
         {
-            return 0;
+            int score = 0;
+            foreach (Book foo in AddedBooks)
+            {
+                score += foo.Score;
+            }
+            return score;
         }
 
-        int CalculatePowert(int daysLeft)
+        public int CalculatePower(int daysLeft)
         {
-            return 0;
+            int totalDays = daysLeft - this.StartUpDays;
+            return totalDays * this.BooksPerDay;
         }
     }
 }

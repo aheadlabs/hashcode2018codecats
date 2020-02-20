@@ -4,12 +4,12 @@ using System.Text;
 
 namespace HashCode2020.Model
 {
-    class Book
+    public class Book
     {
-        int ID { get; set; }
-        int Score { get; set; }
+        public int ID { get; set; }
+        public int Score { get; set; }
 
-        Book(int id, int score)
+        public Book(int id, int score)
         {
             this.ID = id;
             this.Score = score;
